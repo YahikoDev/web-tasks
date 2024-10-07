@@ -1,9 +1,28 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom"
+import { User } from "../interfaces/User";
+import { useStateContext } from "../components/context/ContextProvider";
 
 export default function Signup() {
 
+    const nameRef = useRef<HTMLInputElement>(null)
+    const emailRef = useRef<HTMLInputElement>(null)
+    const passwordRef = useRef<HTMLInputElement>(null)
+
+    const { setUser, setToken } = useStateContext()
+
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        const payload: User = {
+            name: nameRef.current!.value,
+            email: emailRef.current!.value,
+            password: passwordRef.current!.value,
+        }
+
+        setUser({...payload})
+        setToken('token_test')
+
+        console.log(payload)
     }
     return (
         <div>
@@ -11,12 +30,12 @@ export default function Signup() {
                 <div className="form">
                     <form onSubmit={(event) => onSubmit(event)}>
                         <h1>Crear una cuenta</h1>
-                        <input type="text" placeholder="Nombre completo" />
-                        <input type="email" placeholder="Correo" />
-                        <input type="password" placeholder="Contraseña" />
-                        <button className="btn btn-block">Crear Cuenta</button>
+                        <input ref={nameRef} type="text" placeholder="Full name" />
+                        <input ref={emailRef} type="email" placeholder="Email" />
+                        <input ref={passwordRef} type="password" placeholder="Password" />
+                        <button className="btn btn-block">Create</button>
                         <p className="message">
-                            ¿Ya está registrado? <Link to="/login">Iniciar Sesión</Link>
+                        Already registered? <Link to="/login">Login</Link>
                         </p>
                     </form>
                 </div>

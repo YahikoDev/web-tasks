@@ -1,24 +1,9 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-
-
-interface user {
-    name: string
-    email: string
-}
-
-interface ContextProviderProps {
-    children: ReactNode;
-}
-
-interface StateContextType {
-    user: user;
-    token: string | null;
-    setUser: (user: user) => void;
-    setToken: (token: string | null) => void;
-}
+import { createContext, useContext, useState } from "react";
+import { UserOutput } from "../../interfaces/User";
+import { ContextProviderProps, StateContextType } from "../../interfaces/context/Context";
 
 const StateContext = createContext<StateContextType>({
-    user: {} as user,
+    user: {} as UserOutput,
     token: null,
     setUser: () => { },
     setToken: () => { },
