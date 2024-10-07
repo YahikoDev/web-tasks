@@ -10,11 +10,8 @@ const StateContext = createContext<StateContextType>({
 });
 
 export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
-    const [user, setUser] = useState({
-        name: 'Jhon',
-        email: 'jhon@test.com'
-    });
-    const [token, _setToken] = useState<string | null>(null);
+    const [user, setUser] = useState({} as UserOutput);
+    const [token, _setToken] = useState<string | null>(localStorage.getItem('ACCESS_TOKEN'));
 
     const setToken = (token: string | null) => {
         _setToken(token);

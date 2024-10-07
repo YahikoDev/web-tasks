@@ -5,7 +5,6 @@ import Tasks from "./views/Tasks";
 import NotFound from "./views/NotFound";
 import DefaultLayout from "./components/DefaultLayout";
 import GuestLayout from "./components/GuestLayaut";
-import Home from "./views/Home";
 
 const router = createBrowserRouter([
     {
@@ -15,10 +14,6 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Navigate to="/tasks"/>
-            },
-            {
-                path: '/home',
-                element: <Home />
             },
             {
                 path: '/tasks',

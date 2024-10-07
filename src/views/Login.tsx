@@ -21,8 +21,6 @@ export default function Login() {
             password: password.current!.value,
         }
         try {
-
-
             setLoading(true);
             const request = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/auth/login`, {
                 method: 'POST',
@@ -36,18 +34,17 @@ export default function Login() {
 
             if (request.status === 422) {
                 res.messages.forEach(element => {
-                    toast.current!.show({ severity: 'warn', summary: 'Error', detail: element });
+                    toast.current?.show({ severity: 'warn', summary: 'Error', detail: element });
                 });
             }
 
             if (request.status === 200) {
-                toast.current!.show({ severity: 'success', summary: 'OK', detail: 'Longin successfully' });
                 setToken(res.data.token)
-                setUser(res.data.user)
+                setUser({...res.data.user})
             }
             setLoading(false);
         } catch (err) {
-            console.log(err)
+            console.error(`$Errors -> ${err}`)
         }
 
     }
@@ -56,11 +53,11 @@ export default function Login() {
             <div className="form">
                 <form onSubmit={(event) => onSubmit(event)}>
                     <h1>Login</h1>
-                    <input ref={email} type="email" placeholder="email" />
+                    <input ref={email} type="email" placeholder="Email" />
                     <input ref={password} type="password" placeholder="Password" />
                     {
                         !loading ?
-                            <Button className="btn btn-block">Ingresar</Button> :
+                            <Button className="btn btn-block">Login</Button> :
                             <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" />
                     }
                     <p className="message">
