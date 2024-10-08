@@ -16,10 +16,18 @@ export interface Task {
     id_status: number
     id_priority: number
     title: string
-    description: string
+    description: string | null
     date_limit: Date
     created_at: Date
     updated_at: Date
+    status: {
+        id: number
+        title: string
+    },
+    priority: {
+        id: number
+        title: string
+    }
 }
 
 export interface CommonResponsePriorityAndStatus extends Common {
@@ -27,5 +35,5 @@ export interface CommonResponsePriorityAndStatus extends Common {
 }
 
 export interface ResponseTask extends Common {
-    data: [Task]
+    data: Task[]
 }

@@ -4,12 +4,14 @@ import "primereact/resources/themes/bootstrap4-light-purple/theme.css";
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import router from './router.tsx'
-import { ContextProvider } from './components/context/ContextProvider.tsx'
+import { ContextProvider, ContextProviderStatus } from './components/context/ContextProvider.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ContextProvider>
-      <RouterProvider router={router} />
-    </ContextProvider>
+    <ContextProviderStatus>
+      <ContextProvider>
+        <RouterProvider router={router} />
+      </ContextProvider>
+    </ContextProviderStatus>
   </StrictMode>,
 )

@@ -6,10 +6,9 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 
 
 export default function Status() {
-
     const [selectSatus, setSelectStatus] = useState(null);
     const { token } = useStateContext()
-    const [statuses, setStatuses ] = useState<[PriorityAndStatus]>([{} as PriorityAndStatus])
+    const [statuses, setStatuses ] = useState<PriorityAndStatus[]>([])
     const [loading, setLoading] = useState(false);
     
     useEffect(() => {
@@ -38,6 +37,7 @@ export default function Status() {
 
     return (
         <div className="card flex justify-content-center">
+            <p>Status:</p>
             { 
                 !loading ?
                 <Dropdown value={selectSatus} onChange={(e) => setSelectStatus(e.value)} options={statuses} optionLabel="title" 

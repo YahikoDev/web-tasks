@@ -9,7 +9,7 @@ export default function Priority() {
 
     const [selectPriority, setSelectPriority] = useState(null);
     const { token } = useStateContext()
-    const [priorities, setPriorities] = useState<[PriorityAndStatus]>([{} as PriorityAndStatus])
+    const [priorities, setPriorities] = useState<PriorityAndStatus[]>()
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function Priority() {
                 }
                 setLoading(false)
             } catch (err) {
-                console.error(`$Errors -> ${err}`)
+                console.error(`Errors -> ${err}`)
             }
         }
 
@@ -38,6 +38,7 @@ export default function Priority() {
 
     return (
         <div className="card flex justify-content-center">
+            <p>Priority:</p>
             {
                 !loading ?
                     <Dropdown value={selectPriority} onChange={(e) => setSelectPriority(e.value)} options={priorities} optionLabel="title"

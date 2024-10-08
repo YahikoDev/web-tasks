@@ -56,7 +56,7 @@ export default function DefaultLayout() {
                     setUser(res)
                 }
             } catch (err) {
-                console.error(`$Errors -> ${err}`)
+                console.error(`Errors -> ${err}`)
             }
         }
 

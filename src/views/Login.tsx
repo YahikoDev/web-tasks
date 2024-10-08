@@ -44,7 +44,7 @@ export default function Login() {
             }
             setLoading(false);
         } catch (err) {
-            console.error(`$Errors -> ${err}`)
+            console.error(`Errors -> ${err}`)
         }
 
     }
