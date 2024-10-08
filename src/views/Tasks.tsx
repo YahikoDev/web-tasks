@@ -9,6 +9,7 @@ import { Column } from 'primereact/column';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import SaveTasks from "../components/SaveTask";
 
 
 export default function Tasks() {
@@ -67,13 +68,8 @@ export default function Tasks() {
                 <Priority />
                 <div className="card flex justify-content-center">
                     <Button label="New Task" icon="pi pi-external-link" onClick={() => setVisible(true)} />
-                    <Dialog header="Header" visible={visible} style={{ width: '50vw' }} onHide={() => { if (!visible) return; setVisible(false); }}>
-                        <p className="m-0">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
+                    <Dialog header="Save task" visible={visible} style={{ width: '50vw' }} onHide={() => { if (!visible) return; setVisible(false); }}>
+                        <SaveTasks/>
                     </Dialog>
                 </div>
 
@@ -85,8 +81,8 @@ export default function Tasks() {
                         <DataTable value={tasks} paginator rows={5} tableStyle={{ minWidth: '50rem' }} size="small">
                             <Column field="title" header="Title" style={{ width: '25%' }}></Column>
                             <Column field="description" header="Description" style={{ width: '25%' }}></Column>
-                            <Column field="status.title" header="Date limit" style={{ width: '25%' }}></Column>
-                            <Column field="priority.title" header="Date limit" style={{ width: '25%' }}></Column>
+                            <Column field="status.title" header="Status" style={{ width: '25%' }}></Column>
+                            <Column field="priority.title" header="Prioriry" style={{ width: '25%' }}></Column>
                             <Column field="date_limit" header="Date limit" style={{ width: '25%' }}></Column>
                             <Column header="Actions" body={actionBodyTemplate} ></Column>
                         </DataTable>

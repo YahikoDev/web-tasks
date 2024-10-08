@@ -37,3 +37,15 @@ export interface CommonResponsePriorityAndStatus extends Common {
 export interface ResponseTask extends Common {
     data: Task[]
 }
+
+export interface ImputTask {
+    status: number
+    priority: number
+    title: string
+    description: string | null
+    date_limit: Date
+}
+
+export interface ResponseCrateTask extends Common {
+    data: Task
+}
