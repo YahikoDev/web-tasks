@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
-import { useStateContext } from "../components/context/ContextProvider";
-import { CommonResponsePriorityAndStatus, PriorityAndStatus } from "../interfaces/Tasks";
+import { useStateContext, useStateContextPriority } from "../components/context/ContextProvider";
+import { CommonResponsePriorityAndStatus } from "../interfaces/Tasks";
 import { Dropdown } from 'primereact/dropdown';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 
 export default function Priority() {
 
+    const { setPriorities, priorities } = useStateContextPriority()
     const [selectPriority, setSelectPriority] = useState(null);
     const { token } = useStateContext()
-    const [priorities, setPriorities] = useState<PriorityAndStatus[]>()
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

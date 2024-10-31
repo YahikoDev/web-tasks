@@ -18,3 +18,8 @@ export interface StatusContextType {
     statuses: PriorityAndStatus[]
     setStatuses: (statuses: PriorityAndStatus[]) => void
 }
+
+export interface PriorityContextType {
+    priorities: PriorityAndStatus[]
+    setPriorities: (priorities: PriorityAndStatus[]) => void
+}

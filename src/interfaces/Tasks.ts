@@ -1,3 +1,5 @@
+import { Paginate } from "./common"
+
 export interface Common {
     response: boolean
     messages: []
@@ -6,8 +8,10 @@ export interface Common {
 export interface PriorityAndStatus {
     id: number
     title: string
-    created_at: Date
-    updated_at: Date
+}
+
+export interface FullData extends Paginate{
+    data: Task[]
 }
 
 export interface Task {
@@ -35,7 +39,7 @@ export interface CommonResponsePriorityAndStatus extends Common {
 }
 
 export interface ResponseTask extends Common {
-    data: Task[]
+    data: FullData
 }
 
 export interface ImputTask {

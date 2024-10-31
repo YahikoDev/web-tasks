@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { UserOutput } from "../../interfaces/User";
-import { ContextProviderProps, StateContextType, StatusContextType } from "../../interfaces/context/Context";
+import { ContextProviderProps, StateContextType, StatusContextType, PriorityContextType } from "../../interfaces/context/Context";
 import { PriorityAndStatus } from "../../interfaces/Tasks";
 
 const StateContext = createContext<StateContextType>({
@@ -14,6 +14,11 @@ const StateContextStatus = createContext<StatusContextType>({
     statuses: [] as PriorityAndStatus[],
     setStatuses: () => { },
 });
+
+const StateContextPriority = createContext<PriorityContextType>({
+    priorities: [] as PriorityAndStatus[],
+    setPriorities: () => { }
+})
 
 
 export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
@@ -51,6 +56,20 @@ export const ContextProviderStatus: React.FC<ContextProviderProps> = ({ children
     );
 };
 
+export const ContextProviderPriority: React.FC<ContextProviderProps> = ({ children }) => {
+    const [priorities, _setPriorities] = useState([] as PriorityAndStatus[])
+    
+    const setPriorities = (priorities: PriorityAndStatus[]) => {
+        _setPriorities(priorities)
+    }
 
-export const useStateContextSatus = () => useContext(StateContext)
+    return (
+        <StateContextPriority.Provider value={{ priorities, setPriorities }}>
+            {children}
+        </StateContextPriority.Provider>
+    )
+}
+
+export const useStateContextStatus = () => useContext(StateContextStatus)
 export const useStateContext = () => useContext(StateContext)
+export const useStateContextPriority = () => useContext(StateContextPriority)

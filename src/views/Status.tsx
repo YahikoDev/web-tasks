@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
-import { useStateContext } from "../components/context/ContextProvider";
+import { useStateContext, useStateContextStatus } from "../components/context/ContextProvider";
 import { CommonResponsePriorityAndStatus, PriorityAndStatus } from "../interfaces/Tasks";
 import { Dropdown } from 'primereact/dropdown';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 
 export default function Status() {
+    const { setStatuses, statuses } = useStateContextStatus();
     const [selectSatus, setSelectStatus] = useState(null);
     const { token } = useStateContext()
-    const [statuses, setStatuses ] = useState<PriorityAndStatus[]>([])
     const [loading, setLoading] = useState(false);
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -38,12 +38,12 @@ export default function Status() {
     return (
         <div className="card flex justify-content-center">
             <p>Status:</p>
-            { 
+            {
                 !loading ?
-                <Dropdown value={selectSatus} onChange={(e) => setSelectStatus(e.value)} options={statuses} optionLabel="title" 
-                placeholder="Select a status" className="w-full md:w-14rem" />
-                :
-                <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" />
+                    <Dropdown value={selectSatus} onChange={(e) => setSelectStatus(e.value)} options={statuses} optionLabel="title"
+                        placeholder="Select a status" className="w-full md:w-14rem" />
+                    :
+                    <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" />
             }
         </div>
     )

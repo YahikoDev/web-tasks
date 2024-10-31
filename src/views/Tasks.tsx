@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useStateContext } from "../components/context/ContextProvider";
+import { useStateContext} from "../components/context/ContextProvider";
 import Status from "./Status";
 import { ResponseTask, Task } from "../interfaces/Tasks";
 import { Toast } from 'primereact/toast';
@@ -10,7 +10,6 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import SaveTasks from "../components/SaveTask";
-
 
 export default function Tasks() {
 
@@ -34,8 +33,7 @@ export default function Tasks() {
                 const res: ResponseTask = await request.json()
 
                 if (res.response) {
-                    console.log(res.data)
-                    setTasks(res.data)
+                    setTasks(res.data.data)
                 } else {
                     res.messages.forEach(element => {
                         toast.current?.show({ severity: 'warn', summary: 'Error', detail: element });
@@ -69,7 +67,7 @@ export default function Tasks() {
                 <div className="card flex justify-content-center">
                     <Button label="New Task" icon="pi pi-external-link" onClick={() => setVisible(true)} />
                     <Dialog header="Save task" visible={visible} style={{ width: '50vw' }} onHide={() => { if (!visible) return; setVisible(false); }}>
-                        <SaveTasks/>
+                        <SaveTasks />
                     </Dialog>
                 </div>
 
@@ -78,7 +76,7 @@ export default function Tasks() {
                 {
                     !loading ?
 
-                        <DataTable value={tasks} paginator rows={5} tableStyle={{ minWidth: '50rem' }} size="small">
+                        <DataTable value={tasks} tableStyle={{ minWidth: '50rem' }} size="small">
                             <Column field="title" header="Title" style={{ width: '25%' }}></Column>
                             <Column field="description" header="Description" style={{ width: '25%' }}></Column>
                             <Column field="status.title" header="Status" style={{ width: '25%' }}></Column>
@@ -89,8 +87,6 @@ export default function Tasks() {
                         :
                         <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" />
                 }
-
-
             </div>
         </>
     )
