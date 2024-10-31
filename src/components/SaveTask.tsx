@@ -21,12 +21,17 @@ export default function SaveTasks() {
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+
+        const year = new Date(date_limit.current!.value).getFullYear();
+        const month = String(new Date(date_limit.current!.value).getMonth() + 1).padStart(2, '0');
+        const day = String(new Date(date_limit.current!.value).getDate()).padStart(2, '0')
+
         const payload: ImputTask = {
             status: selectSatus.id,
             priority: selectPriority.id,
             title: title.current!.value,
             description: description.current!.value,
-            date_limit: new Date(date_limit.current!.value),
+            date_limit: `${year}-${month}-${day}`
         }
         try {
             setLoading(true);
@@ -41,13 +46,15 @@ export default function SaveTasks() {
 
             const res: ResponseCrateTask = await request.json()
 
+            console.log(res)
+
             if (request.status === 422) {
                 res.messages.forEach(element => {
                     toast.current?.show({ severity: 'warn', summary: 'Error', detail: element });
                 });
             }
 
-            if (request.status === 200) {
+            if (res.response) {
                 res.messages.forEach(element => {
                     toast.current?.show({ severity: 'success', summary: 'OK', detail: element });
                 });
@@ -66,8 +73,8 @@ export default function SaveTasks() {
     return (
         <>
             <form onSubmit={(event) => onSubmit(event)}>
-                <Dropdown value={statuses} onChange={(e) => setSelectStatus(e.value)} options={statuses} optionLabel="title" placeholder="Select a status" className="w-full md:w-14rem" />
-                <Dropdown value={priorities} onChange={(e) => setSelectPriority(e.value)} options={priorities} optionLabel="title" placeholder="Select a priority" className="w-full md:w-14rem" />
+                <Dropdown value={selectSatus} onChange={(e) => setSelectStatus(e.value)} options={statuses} optionLabel="title" placeholder="Select a status" className="w-full md:w-14rem" />
+                <Dropdown value={selectPriority} onChange={(e) => setSelectPriority(e.value)} options={priorities} optionLabel="title" placeholder="Select a priority" className="w-full md:w-14rem" />
                 <input ref={title} type="text" placeholder="Title" />
                 <input ref={description} type="text" placeholder="Description" />
                 <input ref={date_limit} type="date" placeholder="Date limit" />

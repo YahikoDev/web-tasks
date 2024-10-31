@@ -47,7 +47,7 @@ export interface ImputTask {
     priority: number
     title: string
     description: string | null
-    date_limit: Date
+    date_limit: string
 }
 
 export interface ResponseCrateTask extends Common {
