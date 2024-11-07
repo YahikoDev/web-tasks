@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useStateContext} from "../components/context/ContextProvider";
+import { useStateContext } from "../components/context/ContextProvider";
 import Status from "./Status";
 import { ResponseTask, Task } from "../interfaces/Tasks";
 import { Toast } from 'primereact/toast';
@@ -18,35 +18,46 @@ export default function Tasks() {
     const [visible, setVisible] = useState(false);
     const [tasks, setTasks] = useState<Task[]>([])
     const toast = useRef<Toast>(null);
+    const [currentPage, setCurrentPage] = useState(1)
+    const [maxPage, setMaxPage] = useState(0)
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true)
-                const request = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/tasks`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                const res: ResponseTask = await request.json()
-
-                if (res.response) {
-                    setTasks(res.data.data)
-                } else {
-                    res.messages.forEach(element => {
-                        toast.current?.show({ severity: 'warn', summary: 'Error', detail: element });
-                    });
-                }
-                setLoading(false)
-            } catch (err) {
-                console.error(`$Errors -> ${err}`)
-            }
-        }
-
         fetchData()
-    }, [])
+    }, [currentPage])
+
+    const fetchData = async () => {
+        try {
+            setLoading(true)
+            const request = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/tasks?page=${currentPage}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const res: ResponseTask = await request.json()
+
+            if (res.response) {
+                setTasks(res.data.data)
+                setMaxPage(res.data.last_page)
+            } else {
+                res.messages.forEach(element => {
+                    toast.current?.show({ severity: 'warn', summary: 'Error', detail: element });
+                });
+            }
+            setLoading(false)
+        } catch (err) {
+            console.error(`$Errors -> ${err}`)
+        }
+    }
+
+    const handlePrevPage = async () => {
+        setCurrentPage(prevPage => (prevPage > 1 ? prevPage - 1 : 1));
+    }
+
+    const handleNextPage = async () => {
+        setCurrentPage(prevPage => (prevPage === maxPage ? maxPage : prevPage + 1));
+    }
 
     const actionBodyTemplate = () => {
         return (
@@ -87,6 +98,12 @@ export default function Tasks() {
                         :
                         <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" />
                 }
+
+                <div>
+                    <span onClick={handlePrevPage}> {'<'} </span>
+                    <span>{currentPage}</span>
+                    <span onClick={handleNextPage}> {'>'} </span>
+                </div>
             </div>
         </>
     )

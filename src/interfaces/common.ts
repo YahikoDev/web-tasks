@@ -3,7 +3,7 @@ export interface Paginate {
     first_page_url: string
     from: number
     last_page: number
-    last_page_url: string
+    last_page_url: number
     links: links[]
     next_page_url: string | null
     path: string

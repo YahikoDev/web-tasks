@@ -46,8 +46,6 @@ export default function SaveTasks() {
 
             const res: ResponseCrateTask = await request.json()
 
-            console.log(res)
-
             if (request.status === 422) {
                 res.messages.forEach(element => {
                     toast.current?.show({ severity: 'warn', summary: 'Error', detail: element });
